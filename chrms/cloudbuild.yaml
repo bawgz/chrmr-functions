@@ -4,5 +4,5 @@ steps:
       - functions
       - deploy
       - chrms
-      - --source=.
+      - --source=chrms/
       - --trigger-http
