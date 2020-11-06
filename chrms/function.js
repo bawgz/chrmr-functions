@@ -1,3 +1,5 @@
+const mongodb = require('mongodb');
+
 /**
  * Responds to any HTTP request.
  *
@@ -5,7 +7,14 @@
  * @param {!express:Response} res HTTP response context.
  */
 exports.getChrms = (req, res) => {
-    let message = req.query.message || req.body.message || 'Hello World!!!!!!!!!!!';
-    res.status(200).send(message);
-  };
-  
+  mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, client) {
+      
+    const col = client.db('chrmr').collection('chrms');
+          
+    col.find({}).toArray(function(err, items) {
+      client.close();
+      console.log(items);
+      res.status(200).send(items);
+    });
+  });
+};
