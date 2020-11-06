@@ -13,7 +13,6 @@ exports.getChrms = (req, res) => {
           
     col.find({}).toArray(function(err, items) {
       client.close();
-      console.log(items);
       res.status(200).send(items);
     });
   });
