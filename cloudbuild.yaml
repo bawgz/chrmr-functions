@@ -3,6 +3,6 @@ steps:
       args:
       - functions
       - deploy
-      - files
-      - --source=files/
+      - $_FUNCTION
+      - --source=${_FUNCTION}/
       - --trigger-http
