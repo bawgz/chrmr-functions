@@ -1,0 +1,24 @@
+{
+  "name": "chrmr-functions",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start-chrms": "env-cmd functions-framework --source=chrms/ --target=getChrms",
+    "start-files": "env-cmd functions-framework --source=files/ --target=getFile"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bawgz/chrmr-functions.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bawgz/chrmr-functions/issues"
+  },
+  "homepage": "https://github.com/bawgz/chrmr-functions#readme",
+  "dependencies": {
+    "@google-cloud/functions-framework": "^1.7.1"
+  }
+}

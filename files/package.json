@@ -1,7 +1,7 @@
 {
-  "name": "chrms",
+  "name": "files",
   "version": "1.0.0",
-  "type": "module",
+  "description": "",
   "main": "function.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,6 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "mongodb": "^3.6.2"
+    "@google-cloud/storage": "^5.4.0"
   }
 }
