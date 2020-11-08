@@ -6,7 +6,20 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start-chrms": "env-cmd functions-framework --source=chrms/ --target=getChrms",
-    "start-files": "env-cmd functions-framework --source=files/ --target=getFile"
+    "start-files": "env-cmd functions-framework --source=files/ --target=getFile",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,json,md}": [
+      "prettier --write"
+    ],
+    "*.{js}": [
+      "eslint --fix"
+    ]
+  },
+  "prettier": {
+    "trailingComma": "all",
+    "singleQuote": true
   },
   "repository": {
     "type": "git",
@@ -20,5 +33,13 @@
   "homepage": "https://github.com/bawgz/chrmr-functions#readme",
   "dependencies": {
     "@google-cloud/functions-framework": "^1.7.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.12.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-config-prettier": "^6.14.0",
+    "lint-staged": "^10.4.2",
+    "prettier": "^2.1.2"
   }
 }
