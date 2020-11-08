@@ -6,8 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start-chrms": "env-cmd functions-framework --source=chrms/ --target=getChrms",
-    "start-files": "env-cmd functions-framework --source=files/ --target=getFile",
-    "precommit": "lint-staged"
+    "start-files": "env-cmd functions-framework --source=files/ --target=getFile"
   },
   "lint-staged": {
     "*.{js,json,md}": [
@@ -15,7 +14,9 @@
     ],
     "*.{js}": [
       "eslint --fix"
-    ]
+    ],
+    "*.js": "eslint --cache --fix",
+    "*.{js,css,md}": "prettier --write"
   },
   "prettier": {
     "trailingComma": "all",
@@ -40,7 +41,13 @@
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-import": "^2.22.1",
+    "husky": "^4.3.0",
     "lint-staged": "^10.4.2",
     "prettier": "^2.1.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }
