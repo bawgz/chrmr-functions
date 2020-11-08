@@ -11,27 +11,22 @@ const bucketName = 'chrms';
  */
 exports.getFile = async (req, res) => {
 
-  console.log(req.params);
-
   if (!storage) {
     storage = new Storage();
   }
 
   // Downloads the file
   try {
-    const file = await storage
-      .bucket(bucketName)
-      .file(req.params[0]);
+    const file = await storage.bucket(bucketName).file(req.params[0]);
     const exists = await file.exists();
 
     if (!exists[0]) {
-      return res.status(404).send("not found");
+      return res.status(404).send('not found');
     }
 
     return file.createReadStream().pipe(res);
   } catch (err) {
     console.log(err);
-    return res.status(500).send("Error");
+    return res.status(500).send('Error');
   }
 };
-

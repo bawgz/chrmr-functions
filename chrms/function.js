@@ -6,22 +6,19 @@ const mongodb = require('mongodb');
  * @param {!express:Request} req HTTP request context.
  * @param {!express:Response} res HTTP response context.
  */
-exports.getChrms = (req, res) => {
-  mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, client) {
-    const filter = {};
+exports.getChrms = async (req, res) => {
 
-    if (req.query.filter != null && req.query.filter !== "") {
-      const filterTerms = req.query.filter.toLowerCase().trim().split(" ");
-      filter.keywords = {
-        "$in": filterTerms
-      }
-    }
+  const filter = {};
 
-    const col = client.db('chrmr').collection('chrms');
-          
-    col.find(filter).toArray(function(err, items) {
-      client.close();
-      res.status(200).send(items);
-    });
-  });
+  if (req.query.filter != null && req.query.filter !== '') {
+    const filterTerms = req.query.filter.toLowerCase().trim().split(' ');
+    filter.keywords = {
+      $in: filterTerms,
+    };
+  }
+
+  const db = await mongodb.MongoClient.connect(process.env.MONGODB_URI);
+  const collection = await db.db('chrmr').collection('chrms');
+  const chrms =  await collection.find(filter).toArray();
+  res.status(200).send(chrms);
 };

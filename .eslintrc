@@ -1,6 +1,10 @@
 {
-    "extends": ["airbnb", "prettier"],
+    "extends": ["airbnb-base/legacy", "prettier"],
     "env": {
         "node": true
-    }
+    },
+    "parserOptions": {
+        "ecmaVersion": 6
+    },
+    "parser": "babel-eslint"
 }
