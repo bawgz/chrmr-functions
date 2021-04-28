@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start-chrms": "env-cmd functions-framework --source=chrms/ --target=getChrms",
-    "start-files": "env-cmd functions-framework --source=files/ --target=getFile"
+    "start-files": "env-cmd functions-framework --source=files/ --target=getFile",
+    "start-chrm-url": "env-cmd functions-framework --source=chrm-url/ --target=getChrmUrl"
   },
   "lint-staged": {
     "*.{js,json,md}": [
