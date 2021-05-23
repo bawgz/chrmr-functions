@@ -19,6 +19,8 @@ exports.getChrmUrl = async (req, res) => {
   try {
     console.log('req.body');
     console.log(req.body);
+    console.log('req.body stringified');
+    console.log(JSON.stringify(req.body));
     const fileName = req.body.id + '.html';
     const file = await storage.bucket(bucketName).file(fileName);
     const exists = await file.exists();
