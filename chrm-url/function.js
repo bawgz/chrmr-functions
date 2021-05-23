@@ -17,6 +17,7 @@ exports.getChrmUrl = async (req, res) => {
 
   // Downloads the file
   try {
+    console.log('req.body');
     console.log(req.body);
     const fileName = req.body.id + '.html';
     const file = await storage.bucket(bucketName).file(fileName);
@@ -29,28 +30,14 @@ exports.getChrmUrl = async (req, res) => {
       const templateFile = await storage
         .bucket(bucketName)
         .file('template.html');
-      await templateFile.copy(fileName, function (
-        err,
-        copiedFile,
-        apiResponse,
-      ) {
-        console.log('err');
-        console.log(err);
-        console.log('copiedFile');
-        console.log(copiedFile);
-        console.log('apiResponse');
-        console.log(apiResponse);
+      await templateFile.copy(fileName, function (err, copiedFile) {
         copiedFile
           .createReadStream()
           .on('data', function (chunk) {
             chunks.push(chunk);
           })
           .on('end', function () {
-            // The file is fully downloaded.
-            console.log('end');
-            console.log(chunks);
             fileString = Buffer.concat(chunks).toString();
-            console.log(fileString);
 
             const finalString = fileString
               .replace(/_TITLE_/g, req.body.title + ' - ' + req.body.artist)
@@ -58,20 +45,14 @@ exports.getChrmUrl = async (req, res) => {
               .replace('_IMAGE_URL_', req.body.coverUrl)
               .replace('_AUDIO_URL_', req.body.audioUrl);
 
-            console.log(finalString);
-
             const stream = Readable.from(finalString);
-            console.log('piping');
             stream
               .pipe(copiedFile.createWriteStream())
               .on('error', function (err2) {
                 console.log('error');
                 console.log(err2);
               })
-              .on('finish', function () {
-                // The file upload is complete.
-                console.log('finished');
-              });
+              .on('finish', function () {});
           });
       });
 
