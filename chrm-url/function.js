@@ -21,6 +21,16 @@ exports.getChrmUrl = async (req, res) => {
     console.log(req.body);
     console.log('req.body stringified');
     console.log(JSON.stringify(req.body));
+    console.log('req.body.coverUrl');
+    console.log(req.body.coverUrl);
+    console.log('req.body.audioUrl');
+    console.log(req.body.audioUrl);
+    console.log('req.body.id');
+    console.log(req.body.id);
+    console.log('req.body.title');
+    console.log(req.body.title);
+    console.log('req.body.artist');
+    console.log(req.body.artist);
     const fileName = req.body.id + '.html';
     const file = await storage.bucket(bucketName).file(fileName);
     const exists = await file.exists();
@@ -32,13 +42,13 @@ exports.getChrmUrl = async (req, res) => {
       const templateFile = await storage
         .bucket(bucketName)
         .file('template.html');
-      await templateFile.copy(fileName, function (err, copiedFile) {
-        copiedFile
+      await templateFile.copy(fileName, async (err, copiedFile) => {
+        await copiedFile
           .createReadStream()
-          .on('data', function (chunk) {
+          .on('data', (chunk) => {
             chunks.push(chunk);
           })
-          .on('end', function () {
+          .on('end', async () => {
             fileString = Buffer.concat(chunks).toString();
 
             const finalString = fileString
@@ -47,17 +57,22 @@ exports.getChrmUrl = async (req, res) => {
               .replace('_IMAGE_URL_', req.body.coverUrl)
               .replace('_AUDIO_URL_', req.body.audioUrl);
 
-            const stream = Readable.from(finalString);
-            stream
+            console.log(finalString);
+
+            const stream = await Readable.from(finalString);
+            await stream
               .pipe(copiedFile.createWriteStream())
-              .on('error', function (err2) {
+              .on('error', (err2) => {
                 console.log('error');
                 console.log(err2);
               })
-              .on('finish', function () {});
+              .on('finish', () => {
+                console.log('finished');
+              });
           });
       });
 
+      console.log('responding ' + newUrl);
       return res.status(200).send(newUrl);
     }
 
