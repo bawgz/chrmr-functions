@@ -35,6 +35,8 @@ exports.getChrmUrl = async (req, res) => {
     const file = await storage.bucket(bucketName).file(fileName);
     const exists = await file.exists();
 
+    // trigger deploy
+
     if (!exists[0]) {
       const chunks = [];
       let fileString = '';
